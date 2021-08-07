@@ -1,7 +1,7 @@
-Project: photo storage Web app 
-Google photos clone 
+Project: photo Storage Web app 
+Design Pattern: Model-View-Contoller (MVC)
 
 Front-end: Angular 12
-Backend: SpringBoot java 8 
+Backend: SpringBoot Java 8 
 Build Tool: Maven 
 Database: Postgres Sql 
