@@ -10,7 +10,7 @@ public class Contoller {
 
 	@GetMapping
 	public String getUsers() {
-		return "Welcome to jPhotoes backend";
+		return "Welcome to jPhotos backend";
 	}
 	
 }
