@@ -9,5 +9,4 @@ public class JPhotosBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(JPhotosBackendApplication.class, args);
 	}
-
 }
