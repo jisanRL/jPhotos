@@ -1,7 +1,7 @@
  .topnav {
   overflow: hidden;
   background-color: #333;
-  margin: -10px;
+  /* margin: -10px; */
 }
 .logo {
   color: rgb(149, 224, 247);
@@ -95,4 +95,18 @@
     width: 100%;
     text-align: left;
   }
+}
+
+.button {
+  background-color: #555555;
+  border: none;
+  color: white;
+  padding: 10px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 40px;
+  cursor: pointer;
+  float: right;
 }

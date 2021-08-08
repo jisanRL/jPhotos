@@ -1,0 +1,45 @@
+<!-- useless -> remove later -->
+<div class="container row">
+    <div class="col-md-12">
+        <h1>Upload Image</h1>
+    </div>
+</div>
+
+<!-- upload image part -->
+<div class="container row">
+    <div class="col-md-6">
+        <input type="file" (change)="onFileChanged($event)">
+
+    </div>
+    <div class="col-md-6">
+        <input type="button" (click)="onUpload()" value="upload">
+    </div>
+</div>
+<hr />
+
+<div class="container row">
+    <div class="col-md-12">
+        <div *ngIf=message>{{message}}</div>
+    </div>
+</div>
+
+<!--search bar to find the image move this to the navbar later -->
+<div class="container row">
+    <div class="col-md-6">
+        <input type="text" class="form-control" id="name" placeholder="Search image..." [(ngModel)]="imageName"
+            name="name" />
+    </div>
+    <div class="col-md-6">
+        <input type="button" (click)="getImage()" value="Get Image">
+
+    </div>
+</div>
+
+<!-- image viewer -->
+<div class="container row">
+    <div class="col-md-12">
+        <div *ngIf=retreivedImage>
+            <img [src]="retreivedImage">
+        </div>
+    </div>
+</div>
