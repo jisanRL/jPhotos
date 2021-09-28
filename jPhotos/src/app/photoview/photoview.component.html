@@ -1,45 +1,40 @@
 <!-- useless -> remove later -->
-<div class="container row">
-    <div class="col-md-12">
-        <h1>Upload Image</h1>
+<div class="row mt-3 mr-0">
+    <div class="col-lg-6">
+      <p for="comment">Upload Images</p>
+      <input type="file" class="form-control" #images>
     </div>
-</div>
-
-<!-- upload image part -->
-<div class="container row">
-    <div class="col-md-6">
-        <input type="file" (change)="onFileChanged($event)">
-
+    <br>
+    <div class="col-lg-6">
+      <button (click)="save(images)">Upload</button>
     </div>
-    <div class="col-md-6">
-        <input type="button" (click)="onUpload()" value="upload">
-    </div>
-</div>
-<hr />
-
-<div class="container row">
+  </div>
+  <div class="container row">
     <div class="col-md-12">
         <div *ngIf=message>{{message}}</div>
     </div>
 </div>
-
-<!--search bar to find the image move this to the navbar later -->
-<div class="container row">
-    <div class="col-md-6">
-        <input type="text" class="form-control" id="name" placeholder="Search image..." [(ngModel)]="imageName"
-            name="name" />
+  <hr>
+  <div class="row mt-3 mr-0">
+    <div class="col-lg-6">
+      <p for="comment">Search Images</p>
+      <input type="text" class="form-control" #imageName>
     </div>
-    <div class="col-md-6">
-        <input type="button" (click)="getImage()" value="Get Image">
-
+    <br>
+    <div class="col-lg-6">
+      <button (click)="search(imageName.value)">Search</button>
     </div>
-</div>
-
-<!-- image viewer -->
-<div class="container row">
-    <div class="col-md-12">
-        <div *ngIf=retreivedImage>
-            <img [src]="retreivedImage">
-        </div>
+  
+    <div class="col-lg-3" *ngFor="let image of imagesData" style="max-width: 300px; margin: 20px;float: left">
+      <img src="{{'data:image/jpg;base64,'+ image.picByte}}" style="max-width: 100% !important;">
     </div>
+  </div>
+
+
+<br>
+<br>
+<br>
+<br>
+<div *ngFor="let image of imagesData">
+    <img [src]="image">
 </div>

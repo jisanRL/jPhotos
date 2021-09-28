@@ -10,13 +10,15 @@ import { PhotoviewComponent } from './photoview/photoview.component';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ViewerComponent } from './viewer/viewer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     PhotoviewComponent,
-    FooterComponent
+    FooterComponent,
+    ViewerComponent
   ],
   imports: [
     BrowserModule,

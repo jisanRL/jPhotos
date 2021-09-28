@@ -1,6 +1,9 @@
  .topnav {
   overflow: hidden;
+  position: fixed;
   background-color: #333;
+  width: 100%;
+  z-index: 1000;
   /* margin: -10px; */
 }
 .logo {
@@ -97,16 +100,30 @@
   }
 }
 
-.button {
-  background-color: #555555;
-  border: none;
-  color: white;
-  padding: 10px 30px;
-  text-align: center;
-  text-decoration: none;
+/* button */
+.divs {
+  position: relative;
   display: inline-block;
-  font-size: 16px;
-  margin: 4px 40px;
-  cursor: pointer;
+  background-color: #555555;
+  color: rgb(149, 224, 247);
+  font-size: 50px;
   float: right;
+  padding: 14px 30px;
+  right: 100px;
 }
+
+.inputs {
+  position:absolute;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  z-index:999;
+  cursor: pointer;
+}
+.icons {
+  position:relative;
+}
+ 
+
+/* search bar */

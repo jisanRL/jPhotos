@@ -1,9 +1,42 @@
+<!-- <div class="row mt-3 mr-0">
+    <div class="col-lg-6">
+      <p for="comment">Upload Images</p>
+      <input type="file" class="form-control" #images>
+    </div>
+    <br>
+    <div class="col-lg-6">
+      <button (click)="save(images)">Upload</button>
+    </div>
+  </div>
+  <div class="container row">
+    <div class="col-md-12">
+        <div *ngIf=message>{{message}}</div>
+    </div>
+</div>
+  <hr>
+  <div class="row mt-3 mr-0">
+    <div class="col-lg-6">
+      <p for="comment">Search Images</p>
+      <input type="text" class="form-control" #imageName>
+    </div>
+    <br>
+    <div class="col-lg-6">
+      <button (click)="search(imageName.value)">Search</button>
+    </div>
+  
+    <div class="col-lg-3" *ngFor="let image of imagesData" style="max-width: 300px; margin: 20px;float: left">
+      <img src="{{'data:image/jpg;base64,'+image.picByte}}" style="max-width: 100% !important;">
+    </div>
+  </div> -->
+  
 <app-navbar></app-navbar>
 
 <br>
-
+<br>
+<br>
+<br>
 <app-photoview></app-photoview>
-
+<app-viewer></app-viewer>
 <app-footer></app-footer>
 
 <router-outlet></router-outlet>

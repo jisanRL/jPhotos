@@ -1,34 +1,23 @@
 package com.jPhotos.jPhotosBackend.controller;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+//import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.zip.DataFormatException;
-import java.util.zip.Deflater;
-import java.util.zip.Inflater;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity.BodyBuilder;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.jPhotos.jPhotosBackend.model.ImageTable;
 import com.jPhotos.jPhotosBackend.repository.ImageRepository;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200", maxAge=3600)
 @RequestMapping("/image")
+
 public class UploadController {
 	
 	@Autowired
@@ -41,6 +30,38 @@ public class UploadController {
 		tst.addAll(Arrays.asList(arr));
 		return tst;
 	}
+	
+
+	// posts image to the database
+	@PostMapping("/upload")
+	public ResponseEntity<ImageTable> createImage(@RequestBody ImageTable image) {
+		try {
+			ImageTable it = imageRepo.save(image);
+			return new ResponseEntity<>(it, HttpStatus.CREATED);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	//
+	 @GetMapping("/get/{name}")
+	public ResponseEntity<List<ImageTable>> getAllImages(@PathVariable("name") String name){
+		try {
+			List<ImageTable> img = new ArrayList<>(imageRepo.findByNameLike("%" + name + "%"));
+//			img.addAll(imageRepo.findAll());
+//			log.info(img);
+			if (img.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<>(img, HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	/*
 	// posts the image to the database (POST method)
 	@PostMapping("/upload")
 	public BodyBuilder uploadImage(@RequestParam("imageFile") MultipartFile file) throws IOException {
@@ -90,5 +111,6 @@ public class UploadController {
 			os.close();
 		} catch (Exception e) {}
 		return os.toByteArray();
-	}
+	} 
+	*/
 }
