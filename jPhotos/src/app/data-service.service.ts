@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import { Image } from './model/image';
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +38,10 @@ export class DataServiceService {
 
   private handleError(error: HttpErrorResponse): any {
     return throwError(error);
+  }
+
+  // get the image
+  getImages(){
+    return this.http.get<Image[]>('http://localhost:8080/image/' );
   }
 }

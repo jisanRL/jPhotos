@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataServiceService } from '../data-service.service';
 
 @Component({
@@ -16,7 +17,9 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  constructor(private apiManagerService: DataServiceService) {
+  constructor(private apiManagerService: DataServiceService, 
+    private router: Router, 
+    private activatedRoute: ActivatedRoute) {
   }
 
   /*
@@ -68,6 +71,7 @@ export class NavbarComponent implements OnInit {
     this.apiManagerService.get('http://localhost:8080/image/get/' + name).subscribe((imageResponse: any) => {
       console.log(imageResponse);
       this.imagesData = imageResponse;
+       
     }, (error: { error: { message: any; }; }) => {
       console.log(error);
     });

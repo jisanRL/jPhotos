@@ -31,6 +31,11 @@ public class UploadController {
 		return tst;
 	}
 	
+	// gets the image from the database  (GET method)
+	@GetMapping
+	public List<ImageTable> getImages(){
+		return imageRepo.findAll();
+	}
 
 	// posts image to the database
 	@PostMapping("/upload")

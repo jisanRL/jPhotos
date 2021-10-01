@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Image } from '../model/image';
+import { DataServiceService } from '../data-service.service';
+ 
 
 @Component({
   selector: 'app-viewer',
@@ -7,9 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewerComponent implements OnInit {
 
-  constructor() { }
+  images: Array<Image> = []
+  base64textString: any;
+  fileName: any;
+  imagesData: any;
+  message : String = "";
 
-  ngOnInit(): void {
+  constructor(private apiManagerService: DataServiceService) {
   }
 
+  ngOnInit(): void {
+    this.apiManagerService.getImages().subscribe((imageResponse: any) => {
+      this.imagesData = imageResponse;
+    }, (error: { error : {message : any; }; }) => {
+      console.log(error);
+    });
+  }
 }
