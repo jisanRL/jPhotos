@@ -1,13 +1,13 @@
-<body >
-<!-- row of the image, arranging the order -->
-<div class="row" *ngFor="let image of imagesData">
+<body>
+  <!-- row of the image, arranging the order -->
+  <div class="row" >  <!-- do a for loop here later -->
     <!-- image1 -->
-    <div class="column" >
-      <img src="{{'data:image/jpg;base64,'+ image.picByte}}" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
+    <div class="column" *ngFor="let image of imagesData">
+      <!-- gets image from their id -->
+      <img src="{{'data:image/jpg;base64,'+ image.picByte}}" (click)="imgInfo()" style="">
+       <!-- *ngIf="image.id==1"> -->
     </div>
-
-     
     
   </div>
-    
+  
 </body>

@@ -26,4 +26,8 @@ export class ViewerComponent implements OnInit {
       console.log(error);
     });
   }
+
+  imgInfo(){
+    // alert("Image Clicked\n" + this.images);
+  }
 }

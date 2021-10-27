@@ -38,9 +38,9 @@ export class NavbarComponent implements OnInit {
         // call the springboot application to save the image
         this.apiManagerService.post('http://localhost:8080/image/upload', imageData).subscribe((imageResponse: any) => {
           console.log(imageResponse);
-          if (imageResponse.status === 200) {
+          if (imageResponse.status == 200) {
             // this.message =  "Image uploaded successfully";
-            alert("Image uploaded successfully")
+            alert("uploaded successfully")
           } else {
             // this.message = "Upload unsuccessful";
             alert("Upload unsuccessful")
