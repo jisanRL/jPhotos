@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataServiceService } from '../data-service.service';
+import { Image } from '../model/image';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,12 @@ export class NavbarComponent implements OnInit {
   fileName: any;
   imagesData: any;
   message : String = "";
-
+  
+  @Input()
+  img: Image = new Image();
+  
+  @Output()
+  imgAdded = new EventEmitter();
 
   ngOnInit(): void {
   }
@@ -38,9 +44,10 @@ export class NavbarComponent implements OnInit {
         // call the springboot application to save the image
         this.apiManagerService.post('http://localhost:8080/image/upload', imageData).subscribe((imageResponse: any) => {
           console.log(imageResponse);
-          if (imageResponse.status == 200) {
+          if (imageResponse.status === 200) {
             // this.message =  "Image uploaded successfully";
             alert("uploaded successfully")
+            this.imgAdded.emit();
           } else {
             // this.message = "Upload unsuccessful";
             alert("Upload unsuccessful")
@@ -68,13 +75,20 @@ export class NavbarComponent implements OnInit {
   }
 
   search(name: string) {
-    this.apiManagerService.get('http://localhost:8080/image/get/' + name).subscribe((imageResponse: any) => {
-      console.log(imageResponse);
-      this.imagesData = imageResponse;
-       
-    }, (error: { error: { message: any; }; }) => {
-      console.log(error);
-    });
+    let input = (document.getElementById("search") as HTMLInputElement).value;
+
+    if (input.length == 0) {
+      alert("Write the name of the pic");
+    } else {
+      this.apiManagerService.get('http://localhost:8080/image/get/' + name).subscribe((imageResponse: any) => {
+        console.log(imageResponse);
+        this.imagesData = imageResponse;
+        this.router.navigate(['/', 'photo'])
+      }, (error: { error: { message: any; }; }) => {
+        console.log(error);
+      });
+
+    }
   }
 
 }

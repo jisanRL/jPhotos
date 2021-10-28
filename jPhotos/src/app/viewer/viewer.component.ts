@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Image } from '../model/image';
 import { DataServiceService } from '../data-service.service';
  
@@ -16,14 +16,21 @@ export class ViewerComponent implements OnInit {
   imagesData: any;
   message : String = "";
 
+  @Input()
+  image: Image = new Image();
+
+  @Output()
+  imgageAdded = new EventEmitter();
+
   constructor(private apiManagerService: DataServiceService) {
   }
 
   ngOnInit(): void {
-    this.apiManagerService.getImages().subscribe((imageResponse: any) => {
-      this.imagesData = imageResponse;
-    }, (error: { error : {message : any; }; }) => {
-      console.log(error);
+    this.apiManagerService.getImages().subscribe(
+      (imageResponse: any) => {
+        this.imagesData = imageResponse;
+      }, (error: { error : {message : any; }; }) => {
+        console.log(error);
     });
   }
 

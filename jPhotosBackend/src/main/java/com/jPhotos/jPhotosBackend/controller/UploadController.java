@@ -49,7 +49,7 @@ public class UploadController {
 		}
 	}
 	
-	//
+	// gets image (for the search option)
 	 @GetMapping("/get/{name}")
 	public ResponseEntity<List<ImageTable>> getAllImages(@PathVariable("name") String name){
 		try {
@@ -66,56 +66,4 @@ public class UploadController {
 		}
 	}
 	
-	/*
-	// posts the image to the database (POST method)
-	@PostMapping("/upload")
-	public BodyBuilder uploadImage(@RequestParam("imageFile") MultipartFile file) throws IOException {
-		System.out.println("Original size of image: " + file.getBytes().length);
-		ImageTable img = new ImageTable(file.getOriginalFilename(),file.getContentType(), compressByte(file.getBytes()));
-		imageRepo.save(img);
-		return (BodyBuilder) ResponseEntity.status(HttpStatus.OK);
-	}
-	
-	@GetMapping(path = { "/get/{imageName}" })
-	public ImageTable getImage(@PathVariable("imageName") String imageName) throws DataFormatException {
-		final Optional<ImageTable> rtvImage = imageRepo.findByName(imageName);
-		ImageTable img = new ImageTable(rtvImage.get().getName(), rtvImage.get().getType(), decompressByte(rtvImage.get().getPicByte()));
-		return img;
-	}
-	
-	// compression-> algorithm compress the image bytes before storing in the database
-	public static byte[] compressByte(byte[] data) {
-		Deflater dfl = new Deflater();
-		dfl.setInput(data);
-		dfl.finish();
-		
-		ByteArrayOutputStream os = new ByteArrayOutputStream(data.length);
-		byte[] bfr = new byte[1024];
-		while (!dfl.finished()) {
-			int cnt = dfl.deflate(bfr);
-			os.write(bfr,0, cnt);
-		}
-		try {
-			os.close();
-		} catch (Exception e) {}
-		System.out.println("Compressed Image byte size: " + os.toByteArray().length);
-		return os.toByteArray();
-	}
-	
-	// decompression algorithm->  uncompress the image before returning to the front-end 
-	public static byte[] decompressByte(byte[] data) throws DataFormatException {
-		Inflater inf = new Inflater();
-		inf.setInput(data);
-		ByteArrayOutputStream os = new ByteArrayOutputStream(data.length);
-		byte[] bfr = new byte[1024];
-		try {
-			while (!inf.finished()) {
-				int cnt = inf.inflate(bfr);
-				os.write(bfr, 0, cnt);
-			}
-			os.close();
-		} catch (Exception e) {}
-		return os.toByteArray();
-	} 
-	*/
 }

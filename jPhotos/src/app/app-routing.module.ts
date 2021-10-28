@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'navbar', component:NavbarComponent}, 
   { path: 'photo', component:PhotoviewComponent}, 
   { path: 'footer', component:FooterComponent}, 
-  { path: 'view', component:ViewerComponent}, 
+  { path: '', component:ViewerComponent},       // this is the home 
   { path: '**', redirectTo: '' }    
 ];
 
