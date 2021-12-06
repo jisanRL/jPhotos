@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataServiceService } from '../data-service.service';
@@ -10,6 +11,7 @@ import { Image } from '../model/image';
 })
 export class NavbarComponent implements OnInit {
 
+  images: Array<Image> = []
   base64textString: any;
   fileName: any;
   imagesData: any;
@@ -19,14 +21,13 @@ export class NavbarComponent implements OnInit {
   img: Image = new Image();
   
   @Output()
-  imgAdded = new EventEmitter();
+  imgAdded = new EventEmitter<Image>();
 
   ngOnInit(): void {
+    // this.save(this.images);
+    this.getImages();
   }
-  constructor(private apiManagerService: DataServiceService, 
-    private router: Router, 
-    private activatedRoute: ActivatedRoute) {
-  }
+  constructor(private apiManagerService: DataServiceService, private router: Router, private activatedRoute: ActivatedRoute) {}
 
   /*
   uploads image to the database via springboot 
@@ -42,21 +43,48 @@ export class NavbarComponent implements OnInit {
         console.log(imageData);
 
         // call the springboot application to save the image
-        this.apiManagerService.post('http://localhost:8080/image/upload', imageData).subscribe((imageResponse: any) => {
-          console.log(imageResponse);
-          if (imageResponse.status === 200) {
-            // this.message =  "Image uploaded successfully";
-            alert("uploaded successfully")
-            this.imgAdded.emit();
-          } else {
-            // this.message = "Upload unsuccessful";
-            alert("Upload unsuccessful")
-          }
-        }, (error: { error: { message: any; }; }) => {
-          console.log(error);
-        });
+        this.apiManagerService.post('http://localhost:8080/image/upload', imageData).subscribe(
+          (imageResponse: any) => {
+            console.log(imageResponse);
+            if (imageResponse.status === 200) {
+              // this.message =  "Image uploaded successfully";
+              alert("uploaded successfully")
+            } else {
+              // this.message = "Upload unsuccessful";
+              alert("Upload unsuccessful")
+            }
+            this.images = imageResponse;
+          }, 
+          (error: HttpErrorResponse) => {
+            console.log(error);
+          });
       }, 500);
     }
+  }
+
+  // alternate method
+  // save(images: any) {
+  //   this.apiManagerService.addImages(images).subscribe(
+  //     (response: Image) => {
+  //       console.log(response);
+  //       // this.
+  //     }, 
+  //     (error: HttpErrorResponse) => {
+  //       alert(error.message);
+  //     }
+  //   )
+  // }
+  //gets the images
+  getImages() {
+    this.apiManagerService.getImages().subscribe(
+      (response: Image[]) => {
+        this.images = response;
+        console.log(this.images);
+      }, 
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
   }
 
   onUploadChange(file: any): any {

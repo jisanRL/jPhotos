@@ -10,30 +10,29 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 import com.jPhotos.jPhotosBackend.model.ImageTable;
 import com.jPhotos.jPhotosBackend.repository.ImageRepository;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200", maxAge=3600)
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/image")
 
 public class UploadController {
-	
+
 	@Autowired
 	ImageRepository imageRepo;
-	
+
 	@GetMapping("/test")
-	public List<String> testMapper(){
-		String arr[] = {"James", "John", "Joel", "Jacob", "Joseph", "Jose"};
+	public List<String> testMapper() {
+		String arr[] = { "James", "John", "Joel", "Jacob", "Joseph", "Jose" };
 		List<String> tst = new ArrayList<String>();
 		tst.addAll(Arrays.asList(arr));
 		return tst;
 	}
-	
-	// gets the image from the database  (GET method)
+
+	// gets the image from the database (GET method)
 	@GetMapping
-	public List<ImageTable> getImages(){
+	public List<ImageTable> getImages() {
 		return imageRepo.findAll();
 	}
 
@@ -48,10 +47,10 @@ public class UploadController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	// gets image (for the search option)
-	 @GetMapping("/get/{name}")
-	public ResponseEntity<List<ImageTable>> getAllImages(@PathVariable("name") String name){
+	@GetMapping("/get/{name}")
+	public ResponseEntity<List<ImageTable>> getAllImages(@PathVariable("name") String name) {
 		try {
 			List<ImageTable> img = new ArrayList<>(imageRepo.findByNameLike("%" + name + "%"));
 //			img.addAll(imageRepo.findAll());
@@ -66,4 +65,12 @@ public class UploadController {
 		}
 	}
 	
+	// delete the image
+	@DeleteMapping(path = {"/delete/{id}"} )
+	public ImageTable deleteImage(@PathVariable("id") Long id) {
+		ImageTable img = imageRepo.findById(id).get();
+		imageRepo.deleteById(id);
+		return img;
+	}
+
 }

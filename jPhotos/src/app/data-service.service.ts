@@ -44,4 +44,12 @@ export class DataServiceService {
   getImages(){
     return this.http.get<Image[]>('http://localhost:8080/image/' );
   }
+  //add Images
+  addImages(image: Image) {
+    return this.http.post<Image>('http://localhost:8080/image/upload/', image);
+  }
+  // delete image
+  deleteImage(id: number) {
+    return this.http.delete<void>('http://localhost:8080/image/delete/' + id);
+  }
 }

@@ -9,7 +9,7 @@
       </div> -->
       <div class="wrap">
         <div class="search">
-           <input type="text" id="search" class="searchTerm" #imageName placeholder="Search">
+           <input type="text" id="search" class="searchTerm" #imageName placeholder="Search...">
            <button (click)="search(imageName.value)" class="searchButton">
              <i class="fa fa-search"></i>
           </button>
@@ -17,7 +17,7 @@
       </div>
       
     <div class="divs">
-        <input type='file' id='image' class="inputs" (click)="save(images)"#images>
+        <input type='file' id='image' class="inputs" (click)="save(images)" #images>
         <mat-icon>add_to_photos</mat-icon>
     </div>
         

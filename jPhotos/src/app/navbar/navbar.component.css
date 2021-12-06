@@ -104,12 +104,12 @@
 .divs {
   position: relative;
   display: inline-block;
-  background-color: #555555;
+  background-color: transparent;
   color: rgb(149, 224, 247);
   font-size: 50px;
   float: right;
-  padding: 14px 30px;
-  right: 100px;
+  padding: 14px 0px;
+  right: 60px;
 }
 
 .inputs {
@@ -128,7 +128,6 @@
 
 /* search bar */
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
-
 .search {
   width: 100%;
   position: relative;
