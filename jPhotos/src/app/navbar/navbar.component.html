@@ -9,7 +9,7 @@
       </div> -->
       <div class="wrap">
         <div class="search">
-           <input type="text" id="search" class="searchTerm" #imageName placeholder="Search...">
+           <input type="text" id="search" class="searchTerm" placeholder="Search....." #imageName [(ngModel)]="searchTerm" (change)="search(imageName.value)">
            <button (click)="search(imageName.value)" class="searchButton">
              <i class="fa fa-search"></i>
           </button>

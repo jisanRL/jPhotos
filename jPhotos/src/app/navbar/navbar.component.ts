@@ -16,18 +16,30 @@ export class NavbarComponent implements OnInit {
   fileName: any;
   imagesData: any;
   message : String = "";
-  
+  searchTerm :String = "";
+
+   
   @Input()
   img: Image = new Image();
   
   @Output()
   imgAdded = new EventEmitter<Image>();
+  
+  
+  constructor(private apiManagerService: DataServiceService, 
+    private router: Router, 
+    private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     // this.save(this.images);
-    this.getImages();
+    // this.getImages();
+
+    // for search
+    this.activatedRoute.params.subscribe(params => {
+      if (params.searchTerm)
+        this.searchTerm = params.searchTerm;
+    })
   }
-  constructor(private apiManagerService: DataServiceService, private router: Router, private activatedRoute: ActivatedRoute) {}
 
   /*
   uploads image to the database via springboot 
@@ -43,7 +55,7 @@ export class NavbarComponent implements OnInit {
         console.log(imageData);
 
         // call the springboot application to save the image
-        this.apiManagerService.post('http://localhost:8080/image/upload', imageData).subscribe(
+        this.apiManagerService.addImages(imageData).subscribe(
           (imageResponse: any) => {
             console.log(imageResponse);
             if (imageResponse.status === 200) {
@@ -53,7 +65,8 @@ export class NavbarComponent implements OnInit {
               // this.message = "Upload unsuccessful";
               alert("Upload unsuccessful")
             }
-            this.images = imageResponse;
+            // this.images = imageResponse;
+            this.imgAdded.emit();
           }, 
           (error: HttpErrorResponse) => {
             console.log(error);
@@ -62,18 +75,6 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  // alternate method
-  // save(images: any) {
-  //   this.apiManagerService.addImages(images).subscribe(
-  //     (response: Image) => {
-  //       console.log(response);
-  //       // this.
-  //     }, 
-  //     (error: HttpErrorResponse) => {
-  //       alert(error.message);
-  //     }
-  //   )
-  // }
   //gets the images
   getImages() {
     this.apiManagerService.getImages().subscribe(
@@ -107,16 +108,27 @@ export class NavbarComponent implements OnInit {
 
     if (input.length == 0) {
       alert("Write the name of the pic");
-    } else {
-      this.apiManagerService.get('http://localhost:8080/image/get/' + name).subscribe((imageResponse: any) => {
+    } 
+    else {
+      this.apiManagerService.getImagesByName( name).subscribe((imageResponse: any) => {
         console.log(imageResponse);
         this.imagesData = imageResponse;
-        this.router.navigate(['/', 'photo'])
+        // this.router.navigate(['/', 'photo'])
+        this.router.navigateByUrl('/search/' + this.searchTerm);
       }, (error: { error: { message: any; }; }) => {
         console.log(error);
       });
-
     }
   }
+
+  // search(): void {
+  //   if (this.searchTerm.length == 0) {
+  //     alert("Write an name");
+  //   }
+  //   if (this.searchTerm) {
+  //     console.log(this.searchTerm);
+  //     this.router.navigateByUrl('/search/' + this.searchTerm);
+  //   }
+  // }
 
 }

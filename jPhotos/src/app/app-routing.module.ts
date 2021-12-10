@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: 'navbar', component:NavbarComponent}, 
   { path: 'photo', component:PhotoviewComponent}, 
   { path: 'footer', component:FooterComponent}, 
-  { path: '', component:ViewerComponent},       // this is the home 
+  { path: '', component:ViewerComponent},       // this is the viewercomponent 
+  { path: 'search/:searchTerm', component:ViewerComponent},       // this routes the search results to the viewercomponent 
   { path: '**', redirectTo: '' }    
 ];
 

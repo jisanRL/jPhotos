@@ -3,8 +3,8 @@ import { Image } from '../model/image';
 import { DataServiceService } from '../data-service.service';
 // import { error } from 'console';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
  
-
 @Component({
   selector: 'app-viewer',
   templateUrl: './viewer.component.html',
@@ -12,15 +12,24 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ViewerComponent implements OnInit {
 
-  images: Array<Image> = []
+  images: Image[] = []
   imagesData: any;
   message : String = "";
-  deleteImage = new Image();
+  img: Image = new Image();
+  // deleteImage = new Image();
 
-  constructor(private apiManagerService: DataServiceService) {
-  }
+  constructor(private apiManagerService: DataServiceService, 
+    private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    
+    // for search
+    // this.route.params.subscribe(
+    //   params => {
+    //   if(params.searchTerm) {
+    //     this.images = this.apiManagerService.getImages(); 
+    //   }
+    // })
 
     this.getImages();
     // this.apiManagerService.getImages().subscribe(
@@ -57,8 +66,7 @@ export class ViewerComponent implements OnInit {
       }
     )
   }
-
-  imgInfo(){
-    alert("Image Clicked\n" + this.images);
+  imgInfo(name: any){
+    alert("Image Clicked\n" + name);
   }
 }

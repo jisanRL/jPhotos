@@ -10,10 +10,9 @@
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </div>
-                                <div class="image" (click)="imgInfo()">
+                                <div class="image" (click)="imgInfo(image.name)">
                                     <img src="{{'data:image/jpg;base64,'+ image.picByte}}" alt="img" class="img-fluid">
-                                </div>
-                                 
+                                </div>  
                             </a>
                         </div>
                     </div>
