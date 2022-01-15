@@ -1,4 +1,4 @@
-package com.jPhotos.jPhotosBackend.controller;
+package com.jPhotos.jPhotosBackend.uploadController;
 
 //import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +13,19 @@ import java.util.List;
 import com.jPhotos.jPhotosBackend.model.ImageTable;
 import com.jPhotos.jPhotosBackend.repository.ImageRepository;
 
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/image")
-
 public class UploadController {
 
 	@Autowired
 	ImageRepository imageRepo;
+	
+	@GetMapping("/root")
+	public String getUsers() {
+		return "Welcome to jPhotos backend";
+	}
 
 	@GetMapping("/test")
 	public List<String> testMapper() {
@@ -63,6 +68,13 @@ public class UploadController {
 			// TODO: handle exception
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	// edits the image data
+	@PutMapping("/update")
+	public ResponseEntity<ImageTable> updateImage(@RequestBody ImageTable image) {
+		ImageTable imgt = imageRepo.save(image);
+		return new ResponseEntity<>(imgt, HttpStatus.OK);
 	}
 	
 	// delete the image

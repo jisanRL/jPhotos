@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DataServiceService } from '../data-service.service';
+import { DataServiceService } from '../service/data-service.service';
 import { Image } from '../model/image';
 
 @Component({
@@ -18,22 +18,18 @@ export class NavbarComponent implements OnInit {
   message : String = "";
   searchTerm :String = "";
 
-   
   @Input()
   img: Image = new Image();
   
   @Output()
   imgAdded = new EventEmitter<Image>();
   
-  
-  constructor(private apiManagerService: DataServiceService, 
+  constructor(
+    private apiManagerService: DataServiceService, 
     private router: Router, 
     private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    // this.save(this.images);
-    // this.getImages();
-
     // for search
     this.activatedRoute.params.subscribe(params => {
       if (params.searchTerm)
@@ -58,12 +54,11 @@ export class NavbarComponent implements OnInit {
         this.apiManagerService.addImages(imageData).subscribe(
           (imageResponse: any) => {
             console.log(imageResponse);
-            if (imageResponse.status === 200) {
-              // this.message =  "Image uploaded successfully";
-              alert("uploaded successfully")
+            // if there is no internal server error
+            if (imageResponse.status === 500) {
+              alert("uploaded unsuccessfully")
             } else {
-              // this.message = "Upload unsuccessful";
-              alert("Upload unsuccessful")
+              alert("Upload successful")
             }
             // this.images = imageResponse;
             this.imgAdded.emit();
@@ -73,6 +68,19 @@ export class NavbarComponent implements OnInit {
           });
       }, 500);
     }
+  }
+  onUploadChange(file: any): any {
+    if (file) {
+      const reader = new FileReader();
+      this.fileName = file.name;
+      console.log(this.fileName);
+      reader.onload = this.handleReaderLoaded.bind(this);
+      reader.readAsBinaryString(file);
+    }
+  }
+  handleReaderLoaded(e: any): any {
+    this.base64textString = btoa(e.target.result);
+    //console.log(this.base64textString);
   }
 
   //gets the images
@@ -88,21 +96,6 @@ export class NavbarComponent implements OnInit {
     )
   }
 
-  onUploadChange(file: any): any {
-    if (file) {
-      const reader = new FileReader();
-      this.fileName = file.name;
-      console.log(this.fileName);
-      reader.onload = this.handleReaderLoaded.bind(this);
-      reader.readAsBinaryString(file);
-    }
-  }
-
-  handleReaderLoaded(e: any): any {
-    this.base64textString = btoa(e.target.result);
-    //console.log(this.base64textString);
-  }
-
   search(name: string) {
     let input = (document.getElementById("search") as HTMLInputElement).value;
 
@@ -110,25 +103,16 @@ export class NavbarComponent implements OnInit {
       alert("Write the name of the pic");
     } 
     else {
-      this.apiManagerService.getImagesByName( name).subscribe((imageResponse: any) => {
-        console.log(imageResponse);
-        this.imagesData = imageResponse;
-        // this.router.navigate(['/', 'photo'])
-        this.router.navigateByUrl('/search/' + this.searchTerm);
-      }, (error: { error: { message: any; }; }) => {
-        console.log(error);
-      });
+      this.apiManagerService.getImagesByName(name).subscribe(
+        (imageResponse: any) => {
+          console.log(imageResponse);
+          this.imagesData = imageResponse;
+           
+          localStorage.setItem("viewImage", JSON.stringify(this.imagesData));
+          this.router.navigateByUrl('/search/' + this.searchTerm);
+        }, (error: { error: { message: any; }; }) => {
+          console.log(error);
+        });
     }
   }
-
-  // search(): void {
-  //   if (this.searchTerm.length == 0) {
-  //     alert("Write an name");
-  //   }
-  //   if (this.searchTerm) {
-  //     console.log(this.searchTerm);
-  //     this.router.navigateByUrl('/search/' + this.searchTerm);
-  //   }
-  // }
-
 }

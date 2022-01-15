@@ -1,323 +1,41 @@
 <div id="main-content" class="file_manager">
-        <div class="container">
-            <div class="row clearfix">
-                <div class="col-lg-3 col-md-4 col-sm-12" *ngFor="let image of images" >
-                    <div class="card">
-                        <div class="file">
-                            <a href="javascript:void(0);">
-                                <div class="hover">
-                                    <button type="button" class="btn btn-icon btn-danger" (click)="deletePic(image!.id)">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="image" (click)="imgInfo(image.name)">
-                                    <img src="{{'data:image/jpg;base64,'+ image.picByte}}" alt="img" class="img-fluid">
-                                </div>  
-                            </a>
-                        </div>
-                    </div>
-                </div>                            
-                <!-- <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="file">
-                            <a href="javascript:void(0);">
-                                <div class="hover">
-                                    <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="image">
-                                    <img src="https://via.placeholder.com/280x280/FF69B4/000000" alt="img" class="img-fluid">
-                                </div>
-                                <div class="file-name">
-                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                    <small>Size: 2MB <span class="date text-muted">Dec 11, 2017</span></small>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="file">
-                            <a href="javascript:void(0);">
-                                <div class="hover">
-                                    <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="image">
-                                    <img src="https://via.placeholder.com/280x280/FFA07A/000000" alt="img" class="img-fluid">
-                                </div>
-                                <div class="file-name">
-                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                    <small>Size: 2MB <span class="date text-muted">Dec 11, 2017</span></small>
-                                </div>
-                            </a>
-                        </div>
+    <div style="float: left;padding-left:120px;">
+        <h4>{{images.length}} images</h4>
+        <p>{{searchTerm}}</p>
+    </div>
+
+    <br><br>
+    <div class="container" id="main-container" >
+        <div class="row clearfix">
+            <div class="col-lg-3 col-md-4 col-sm-12" *ngFor="let image of images">
+                <div class="card">
+                    <div class="file">
+                        <a href="javascript:void(0);">
+                            <div class="hover">
+                                <button type="button" class="btn btn-icon btn-danger" (click)="deletePic(image!.id)">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                            <div class="image" data-toggle="modal" (click)="onOpenModal(image,'view')">
+                                <img src="{{'data:image/jpg;base64,'+ image.picByte}}" alt="img" class="img-fluid">
+                            </div>
+                        </a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="file">
-                            <a href="javascript:void(0);">
-                                <div class="hover">
-                                    <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="image">
-                                    <img src="https://via.placeholder.com/280x280/B0C4DE/000000" alt="img" class="img-fluid">
-                                </div>
-                                <div class="file-name">
-                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                    <small>Size: 2MB <span class="date text-muted">Dec 11, 2017</span></small>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="file">
-                            <a href="javascript:void(0);">
-                                <div class="hover">
-                                    <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="image">
-                                    <img src="https://via.placeholder.com/280x280/9370DB/000000" alt="img" class="img-fluid">
-                                </div>
-                                <div class="file-name">
-                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                    <small>Size: 2MB <span class="date text-muted">Dec 11, 2017</span></small>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>               
-                <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="file">
-                            <a href="javascript:void(0);">
-                                <div class="hover">
-                                    <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="image">
-                                    <img src="https://via.placeholder.com/280x280/48D1CC/000000" alt="img" class="img-fluid">
-                                </div>
-                                <div class="file-name">
-                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                    <small>Size: 2MB <span class="date text-muted">Dec 11, 2017</span></small>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="file">
-                            <a href="javascript:void(0);">
-                                <div class="hover">
-                                    <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="image">
-                                    <img src="https://via.placeholder.com/280x280/DA70D6/000000" alt="img" class="img-fluid">
-                                </div>
-                                <div class="file-name">
-                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                    <small>Size: 2MB <span class="date text-muted">Dec 11, 2017</span></small>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="file">
-                            <a href="javascript:void(0);">
-                                <div class="hover">
-                                    <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="image">
-                                    <img src="https://via.placeholder.com/280x280/DB7093/000000" alt="img" class="img-fluid">
-                                </div>
-                                <div class="file-name">
-                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                    <small>Size: 2MB <span class="date text-muted">Dec 11, 2017</span></small>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>                            
-                <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="file">
-                            <a href="javascript:void(0);">
-                                <div class="hover">
-                                    <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="image">
-                                    <img src="https://via.placeholder.com/280x280/DDA0DD/000000" alt="img" class="img-fluid">
-                                </div>
-                                <div class="file-name">
-                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                    <small>Size: 2MB <span class="date text-muted">Dec 11, 2017</span></small>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="file">
-                            <a href="javascript:void(0);">
-                                <div class="hover">
-                                    <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="image">
-                                    <img src="https://via.placeholder.com/280x280/FFC0CB/000000" alt="img" class="img-fluid">
-                                </div>
-                                <div class="file-name">
-                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                    <small>Size: 2MB <span class="date text-muted">Dec 11, 2017</span></small>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="file">
-                            <a href="javascript:void(0);">
-                                <div class="hover">
-                                    <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="image">
-                                    <img src="https://via.placeholder.com/280x280/FA8072/000000" alt="img" class="img-fluid">
-                                </div>
-                                <div class="file-name">
-                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                    <small>Size: 2MB <span class="date text-muted">Dec 11, 2017</span></small>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="file">
-                            <a href="javascript:void(0);">
-                                <div class="hover">
-                                    <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="image">
-                                    <img src="https://via.placeholder.com/280x280/4682B4/000000" alt="img" class="img-fluid">
-                                </div>
-                                <div class="file-name">
-                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                    <small>Size: 2MB <span class="date text-muted">Dec 11, 2017</span></small>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>               
-                <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="file">
-                            <a href="javascript:void(0);">
-                                <div class="hover">
-                                    <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="image">
-                                    <img src="https://via.placeholder.com/280x280/40E0D0/000000" alt="img" class="img-fluid">
-                                </div>
-                                <div class="file-name">
-                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                    <small>Size: 2MB <span class="date text-muted">Dec 11, 2017</span></small>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="file">
-                            <a href="javascript:void(0);">
-                                <div class="hover">
-                                    <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="image">
-                                    <img src="https://via.placeholder.com/280x280/87CEFA/000000" alt="img" class="img-fluid">
-                                </div>
-                                <div class="file-name">
-                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                    <small>Size: 2MB <span class="date text-muted">Dec 11, 2017</span></small>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="file">
-                            <a href="javascript:void(0);">
-                                <div class="hover">
-                                    <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="image">
-                                    <img src="https://via.placeholder.com/280x280/FA8072/000000" alt="img" class="img-fluid">
-                                </div>
-                                <div class="file-name">
-                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                    <small>Size: 2MB <span class="date text-muted">Dec 11, 2017</span></small>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-12">
-                    <div class="card">
-                        <div class="file">
-                            <a href="javascript:void(0);">
-                                <div class="hover">
-                                    <button type="button" class="btn btn-icon btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                                <div class="image">
-                                    <img src="https://via.placeholder.com/280x280/87CEFA/000000" alt="img" class="img-fluid">
-                                </div>
-                                <div class="file-name">
-                                    <p class="m-b-5 text-muted">img21545ds.jpg</p>
-                                    <small>Size: 2MB <span class="date text-muted">Dec 11, 2017</span></small>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div> -->
             </div>
-            
         </div>
+    </div>
+  
+</div>
+
+
+<app-footer></app-footer>
+
+<div class="modal fade bd-example-modal-lg" id="updateEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <h1 style="text-align: center;">{{viewImage.name}}</h1>
+        <img src="{{'data:image/jpg;base64,'+ viewImage.picByte}}" alt="" style="height: 100%;width:100%">
+    </div>
+  </div>
 </div>

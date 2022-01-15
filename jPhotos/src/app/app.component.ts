@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DataServiceService } from './data-service.service';
+import { DataServiceService } from './service/data-service.service';
 import { Image } from './model/image';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -33,6 +33,4 @@ export class AppComponent {
     )
   }
   
-
-   
 }

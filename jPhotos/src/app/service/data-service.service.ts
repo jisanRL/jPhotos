@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import { Image } from './model/image';
+import { Image } from '../model/image';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class DataServiceService {
   constructor(private http: HttpClient) {
   }
 
-  /* uneeded code
+  // useless code
   public get(endpoint: any): any {
     return this.http.get(endpoint).pipe(
       catchError(this.handleError),
@@ -36,7 +36,7 @@ export class DataServiceService {
   private handleError(error: HttpErrorResponse): any {
     return throwError(error);
   }
-  */
+   
 
   // get the image
   getImages(){
@@ -49,6 +49,10 @@ export class DataServiceService {
   //add Images
   addImages(image: any) {
     return this.http.post<Image>('http://localhost:8080/image/upload/', image);
+  }
+  // updates the employee info
+  updateImage(image: Image) {
+    return this.http.put<Image>('http://localhost:8080/image/update/', image);
   }
   // delete image
   deleteImage(id: number) {

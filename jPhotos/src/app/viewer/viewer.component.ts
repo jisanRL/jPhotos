@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Image } from '../model/image';
-import { DataServiceService } from '../data-service.service';
+import { DataServiceService } from '../service/data-service.service';
 // import { error } from 'console';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
@@ -16,29 +16,38 @@ export class ViewerComponent implements OnInit {
   imagesData: any;
   message : String = "";
   img: Image = new Image();
-  // deleteImage = new Image();
+  viewImage: Image = new Image()
+  selectedImage: Image = new Image();
+  searchTerm:String = "";
+  action: string='';
 
   constructor(private apiManagerService: DataServiceService, 
     private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    
-    // for search
-    // this.route.params.subscribe(
-    //   params => {
-    //   if(params.searchTerm) {
-    //     this.images = this.apiManagerService.getImages(); 
-    //   }
-    // })
+    // this.getImages();
+    this.refreshData();
+  }
+  
+  refreshData(){
+    // gets the books from the database
+    this.apiManagerService.getImages().subscribe(
+     response => this.handleSuccessfulResponse(response)
+   );
+   // go the the addbook paramater in the same page and get that component
+   this.route.queryParams.subscribe(
+     (params) => {
+       this.action = params['action'];
 
-    this.getImages();
-    // this.apiManagerService.getImages().subscribe(
-    //   (imageResponse: any) => {
-    //     this.imagesData = imageResponse;
-    //     this.imgageAdded.emit(this.image);
-    //   }, (error: { error : {message : any; }; }) => {
-    //     console.log(error);
-    // });
+       const selectedImageID = params['id'];
+       if(selectedImageID) {
+         this.selectedImage = this.images.find(image => image.id === +selectedImageID)!;
+       }
+     }
+   );
+  }
+  handleSuccessfulResponse(response:any) {
+    this.images = response;
   }
 
   //gets the images
@@ -53,7 +62,19 @@ export class ViewerComponent implements OnInit {
       }
     )
   }
-
+  // updates the image
+  onUpdateImage(image:Image):void {
+    this.apiManagerService.updateImage(image).subscribe(
+      (response: Image) => {
+        console.log(response);
+        this.getImages();
+      }, 
+      // error response
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    )
+  }
   // deletes the pic
   deletePic(id: number): void {
     this.apiManagerService.deleteImage(id).subscribe(
@@ -66,7 +87,21 @@ export class ViewerComponent implements OnInit {
       }
     )
   }
-  imgInfo(name: any){
-    alert("Image Clicked\n" + name);
+  // opens the forms for adding and editing the employee
+  onOpenModal(image: Image, mode: String): void {
+    const container = document.getElementById('main-container');
+    const button  = document.createElement('button');
+    button.type = 'button';
+    button.style.display = 'none';      // hides the button
+    button.setAttribute('data-toggle', 'modal');
+
+    if (mode === 'view') {
+      this.viewImage = image;
+      button.setAttribute('data-target', '#updateEmployeeModal');
+    }
+    
+    container?.appendChild(button);
+    button.click();       // this will open the appropirate modal
   }
+
 }
