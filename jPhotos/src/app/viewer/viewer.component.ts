@@ -104,4 +104,22 @@ export class ViewerComponent implements OnInit {
     button.click();       // this will open the appropirate modal
   }
 
+  search(name: string) {
+    const resArr: Image[] = [];
+
+    // loop thorugh the res
+    for (const image of this.images) {
+      // if there is a match between any elements push to to resArr
+      if (image.name.toLocaleLowerCase().indexOf(name.toLocaleLowerCase()) != -1) 
+      {
+        resArr.push(image);
+      }
+    }
+    this.images = resArr;
+
+    if (resArr.length === 0 || !name) {
+      this.getImages();
+    }
+  }
+
 }

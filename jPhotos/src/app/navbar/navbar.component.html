@@ -1,23 +1,9 @@
 <div class="topnav" id="myTopnav">
     <a routerLink="/" class="logo">jPhotos</a>
-    <a routerLink="/photo">upload Pictures</a>
+    <!-- <a routerLink="/photo">upload Pictures</a> -->
     &nbsp;&nbsp;
-    <!-- <a routerLink="/view">View Pictures</a> -->
-    <!-- <div class="" style="width: 50%;float:left;padding:10px;">
-        <input type="text" class="form-control" #imageName>
-        <button (click)="search(imageName.value)">Search</button>
-      </div> -->
-      
-      <div class="wrap">
-        <div class="search">
-          <!-- type="search" -->
-           <input type="text" id="search" class="searchTerm" placeholder="Search....." #imageName [(ngModel)]="searchTerm" (change)="search(imageName.value)">
-           <button (click)="search(imageName.value)" class="searchButton">
-             <i class="fa fa-search"></i>
-          </button>
-        </div>
-      </div>
-      
+
+    
     <div class="divs">
         <input type='file' id='image' class="inputs" (click)="save(images)" #images>
         <mat-icon>add_to_photos</mat-icon>

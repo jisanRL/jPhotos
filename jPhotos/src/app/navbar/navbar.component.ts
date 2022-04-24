@@ -96,23 +96,24 @@ export class NavbarComponent implements OnInit {
     )
   }
 
-  search(name: string) {
-    let input = (document.getElementById("search") as HTMLInputElement).value;
 
-    if (input.length == 0) {
-      alert("Write the name of the pic");
-    } 
-    else {
-      this.apiManagerService.getImagesByName(name).subscribe(
-        (imageResponse: any) => {
-          console.log(imageResponse);
-          this.imagesData = imageResponse;
-           
-          localStorage.setItem("viewImage", JSON.stringify(this.imagesData));
-          this.router.navigateByUrl('/search/' + this.searchTerm);
-        }, (error: { error: { message: any; }; }) => {
-          console.log(error);
-        });
+  search(name: string) {
+    const resArr: Image[] = [];
+
+    // loop thorugh the res
+    for (const image of this.images) {
+      // if there is a match between any elements push to to resArr
+      if (image.name.toLocaleLowerCase().indexOf(name.toLocaleLowerCase()) != -1) 
+      {
+        resArr.push(image);
+      }
+    }
+    this.images = resArr;
+
+    if (resArr.length === 0 || !name) {
+      this.getImages();
     }
   }
+
+
 }

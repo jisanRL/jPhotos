@@ -1,11 +1,17 @@
 <div id="main-content" class="file_manager">
+    <form class="form-inline my-2 my-lg-0">
+        <input type="search" (ngModelChange)="search(key.value)" #key="ngModel" ngModel
+         name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search Photos..." required 
+         style="margin-left:90px;margin-bottom:20px;width: 90%;z-index:1;">
+     </form>
     <div style="float: left;padding-left:120px;">
         <h4>{{images.length}} images</h4>
         <p>{{searchTerm}}</p>
     </div>
-
+   
     <br><br>
-    <div class="container" id="main-container" >
+   
+    <div class="container" id="main-container" style="overflow-y: auto; height:1000px;">
         <div class="row clearfix">
             <div class="col-lg-3 col-md-4 col-sm-12" *ngFor="let image of images">
                 <div class="card">
@@ -31,6 +37,7 @@
 
 <app-footer></app-footer>
 
+<!-- the photoes that is view once clicked -->
 <div class="modal fade bd-example-modal-lg" id="updateEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
